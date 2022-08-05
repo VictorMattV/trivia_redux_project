@@ -40,6 +40,8 @@ class Login extends React.Component {
 
   render() {
     const { email, username, isDisabled } = this.state;
+    const { history } = this.props;
+
     return (
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
@@ -70,6 +72,13 @@ class Login extends React.Component {
           onClick={ this.handleClick }
         >
           Play
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => history.push('/settings') }
+        >
+          Settings
         </button>
       </header>
     );
