@@ -46,6 +46,7 @@ class Login extends React.Component {
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
         <label htmlFor="email">
+          Email:
           <input
             type="email"
             data-testid="input-gravatar-email"
@@ -56,8 +57,9 @@ class Login extends React.Component {
           />
         </label>
         <label htmlFor="username">
+          Nome:
           <input
-            type="name"
+            type="text"
             data-testid="input-player-name"
             id="username"
             name="username"
