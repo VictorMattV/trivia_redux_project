@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { loginAction } from '../redux/actions';
 import fetchToken from '../services/fetchToken';
 import logo from '../trivia.png';
 
@@ -23,7 +25,7 @@ class Login extends React.Component {
 
   validateInputs = () => {
     const { email, username } = this.state;
-    const minLength = 5;
+    const minLength = 3;
     if (email.length > minLength && username.length > minLength) {
       this.setState({
         isDisabled: false,
@@ -31,10 +33,17 @@ class Login extends React.Component {
     }
   }
 
+  saveUserLoginInfo = () => {
+    const { dispatch } = this.props;
+    const { email, username } = this.state;
+    const userInfo = { email, username };
+    dispatch(loginAction(userInfo));
+  }
+
   handleClick = () => {
     const { history } = this.props;
     fetchToken();
-
+    this.saveUserLoginInfo();
     history.push('/game');
   }
 
@@ -86,9 +95,10 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
 };
 
-export default Login;
+export default connect()(Login);
