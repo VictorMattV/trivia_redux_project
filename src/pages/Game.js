@@ -1,12 +1,27 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 
 class Game extends React.Component {
   state = {
     index: 0,
+    timer: 30,
+  }
+
+  componentDidUpdate() {
+    this.questionsTimer();
+  }
+
+  questionsTimer = () => {
+    const { timer } = this.state;
+    const miliseconds = 1000;
+    if (timer) {
+      setTimeout(() => this.setState({
+        timer: timer - 1,
+      }), miliseconds);
+    }
   }
 
   handleClick = () => {
@@ -21,7 +36,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { index } = this.state;
+    const { index, timer } = this.state;
     const { loading, questions, logout } = this.props;
     if (logout) {
       return <Redirect to="/" />;
@@ -53,7 +68,9 @@ class Game extends React.Component {
                   {elem}
                 </button>
               ))}
-
+            </div>
+            <div>
+              {timer}
             </div>
           </section>
         )}
