@@ -4,23 +4,19 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 
-// const random3 = 3;
-// const random4 = 4;
-// const random5 = 5;
-
 class Game extends React.Component {
   state = {
     index: 0,
     questionsAll: [],
   }
 
-  // componentDidUpdate() {
-  //   const { loading } = this.props;
-  //   const { index } = this.state;
-  //   if (!loading) {
-  //     this.randomAnswer(index);
-  //   }
-  // }
+  componentDidMount() {
+    const { loading } = this.props;
+    const { index } = this.state;
+    if (!loading) {
+      this.randomAnswer(index);
+    }
+  }
 
   randomAnswer = (index) => {
     const { questions } = this.props;
@@ -50,12 +46,6 @@ class Game extends React.Component {
   render() {
     const { index, questionsAll } = this.state;
     const { loading, questions, logout } = this.props;
-    if (!loading) {
-      this.randomAnswer(index);
-    }
-    // this.randomAnswer(index);
-    // console.log(questions);
-    // console.log(arrRandom);
     if (logout) {
       return <Redirect to="/" />;
     }
@@ -67,14 +57,6 @@ class Game extends React.Component {
             <h3 data-testid="question-category">{questions[index].category}</h3>
             <p data-testid="question-text">{questions[index].question}</p>
             <div data-testid="answer-options" className="answer-options">
-              {/* <button
-                data-testid="correct-answer"
-                type="button"
-                onClick={ this.handleClick }
-                // className={ `order-${arrRandom[0]}` }
-              >
-                {questions[index].correct_answer}
-              </button> */}
               {questionsAll.map((elem, i) => (
                 (elem === questions[index].correct_answer)
                   ? (
