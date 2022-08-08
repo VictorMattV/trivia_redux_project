@@ -8,19 +8,45 @@ class Game extends React.Component {
   state = {
     index: 0,
     timer: 30,
+    isDisabled: false,
   }
 
-  componentDidUpdate() {
-    this.questionsTimer();
+  componentDidMount() {
+    this.questionsTimer2();
+  }
+
+  // componentDidUpdate() {
+  //   this.questionsTimer();
+  // }
+
+  // disableButtons = () => {
+  //   const { timer } = this.state;
+  //   if (timer === 0) {
+  //     this.setState({ isDisabled: true });
+  //   }
+  // }
+
+  questionsTimer2 = () => {
+    const milliseconds = 1000;
+    setInterval(() => {
+      const { timer } = this.state;
+      if (timer) {
+        this.setState({
+          timer: timer - 1,
+        });
+      } else {
+        this.setState({ isDisabled: true });
+      }
+    }, milliseconds);
   }
 
   questionsTimer = () => {
     const { timer } = this.state;
-    const miliseconds = 1000;
+    const milliseconds = 1000;
     if (timer) {
       setTimeout(() => this.setState({
         timer: timer - 1,
-      }), miliseconds);
+      }), milliseconds);
     }
   }
 
@@ -36,12 +62,11 @@ class Game extends React.Component {
   }
 
   render() {
-    const { index, timer } = this.state;
+    const { index, timer, isDisabled } = this.state;
     const { loading, questions, logout } = this.props;
     if (logout) {
       return <Redirect to="/" />;
     }
-    console.log('oi');
     return (
       <div>
         <Header />
@@ -54,6 +79,7 @@ class Game extends React.Component {
                 data-testid="correct-answer"
                 type="button"
                 onClick={ this.handleClick }
+                disabled={ isDisabled }
               >
                 {questions[index].correct_answer}
               </button>
@@ -64,6 +90,7 @@ class Game extends React.Component {
                   type="button"
                   key={ i }
                   onClick={ this.handleClick }
+                  disabled={ isDisabled }
                 >
                   {elem}
                 </button>
