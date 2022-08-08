@@ -10,6 +10,8 @@ class Game extends React.Component {
     timer: 30,
     isDisabled: false,
     questionsAll: [],
+    // classCorrect: '',
+    // classWrong: '',
   }
 
   componentDidMount() {
@@ -18,7 +20,7 @@ class Game extends React.Component {
     if (!loading) {
       this.randomAnswer(index);
     }
-    this.questionsTimer();
+    // this.questionsTimer();
   }
 
   randomAnswer = (index) => {
@@ -50,18 +52,46 @@ class Game extends React.Component {
   }
 
   handleClick = () => {
+    // const { index } = this.state;
+    // const { questions } = this.props;
+    // const arrLength = questions.length - 1;
+    // if (index < arrLength) {
+    //   this.setState({ index: index + 1 }, () => {
+    //     this.randomAnswer(index);
+    this.verifyCorrect();
+    //   });
+    // } else {
+    //   this.setState({ index });
+    // }
+  }
+
+  verifyCorrect = () => {
+    // const { classCorrect } = this.state;
+    // const { questions } = this.props;
+    this.setState({
+      classCorrect: 'correct-answer',
+      classWrong: 'wrong-answer',
+    });
+  }
+
+  nextClick = () => {
     const { index } = this.state;
     const { questions } = this.props;
     const arrLength = questions.length - 1;
     if (index < arrLength) {
-      this.setState({ index: index + 1 }, () => this.randomAnswer(index));
+      this.setState({ index: index + 1 }, () => {
+        this.randomAnswer(index);
+      });
     } else {
-      this.setState({ index }, () => this.randomAnswer(index));
+      this.setState({ index });
     }
   }
 
   render() {
-    const { index, timer, isDisabled, questionsAll } = this.state;
+    const {
+      index, timer, isDisabled, questionsAll, classCorrect, classWrong,
+    } = this.state;
+
     const { loading, questions, logout } = this.props;
     if (logout) {
       return <Redirect to="/" />;
@@ -79,6 +109,7 @@ class Game extends React.Component {
                   ? (
                     <button
                       data-testid="correct-answer"
+                      className={ classCorrect }
                       type="button"
                       onClick={ this.handleClick }
                       disabled={ isDisabled }
@@ -88,6 +119,7 @@ class Game extends React.Component {
                   : (
                     <button
                       data-testid={ `wrong-answer-${index}` }
+                      className={ classWrong }
                       type="button"
                       key={ i }
                       onClick={ this.handleClick }
