@@ -26,6 +26,7 @@ class Game extends React.Component {
     if (logout) {
       return <Redirect to="/" />;
     }
+    console.log('oi');
     return (
       <div>
         <Header />
