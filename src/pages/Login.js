@@ -47,8 +47,8 @@ class Login extends React.Component {
   handleClick = async () => {
     const { dispatch, history } = this.props;
     this.saveUserLoginInfo();
+    await dispatch(requestQuestions());
     history.push('/game');
-    dispatch(requestQuestions());
   }
 
   render() {

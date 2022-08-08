@@ -9,24 +9,33 @@ class Game extends React.Component {
     index: 0,
     timer: 30,
     isDisabled: false,
+    questionsAll: [],
   }
 
   componentDidMount() {
-    this.questionsTimer2();
+    const { loading } = this.props;
+    const { index } = this.state;
+    if (!loading) {
+      this.randomAnswer(index);
+    }
+    this.questionsTimer();
   }
 
-  // componentDidUpdate() {
-  //   this.questionsTimer();
-  // }
+  randomAnswer = (index) => {
+    const { questions } = this.props;
+    console.log(questions);
+    const questionsInc = questions[index].incorrect_answers;
+    const questionsAll = questionsInc.concat(questions[index].correct_answer);
+    console.log(questionsAll);
+    for (let i = 0; i < questionsAll.length; i += 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [questionsAll[i], questionsAll[j]] = [questionsAll[j], questionsAll[i]];
+    }
+    this.setState({ questionsAll });
+    console.log(questionsAll);
+  }
 
-  // disableButtons = () => {
-  //   const { timer } = this.state;
-  //   if (timer === 0) {
-  //     this.setState({ isDisabled: true });
-  //   }
-  // }
-
-  questionsTimer2 = () => {
+  questionsTimer = () => {
     const milliseconds = 1000;
     setInterval(() => {
       const { timer } = this.state;
@@ -40,29 +49,19 @@ class Game extends React.Component {
     }, milliseconds);
   }
 
-  questionsTimer = () => {
-    const { timer } = this.state;
-    const milliseconds = 1000;
-    if (timer) {
-      setTimeout(() => this.setState({
-        timer: timer - 1,
-      }), milliseconds);
-    }
-  }
-
   handleClick = () => {
     const { index } = this.state;
     const { questions } = this.props;
     const arrLength = questions.length - 1;
     if (index < arrLength) {
-      this.setState({ index: index + 1 });
+      this.setState({ index: index + 1 }, () => this.randomAnswer(index));
     } else {
-      this.setState({ index });
+      this.setState({ index }, () => this.randomAnswer(index));
     }
   }
 
   render() {
-    const { index, timer, isDisabled } = this.state;
+    const { index, timer, isDisabled, questionsAll } = this.state;
     const { loading, questions, logout } = this.props;
     if (logout) {
       return <Redirect to="/" />;
@@ -70,30 +69,33 @@ class Game extends React.Component {
     return (
       <div>
         <Header />
-        {!loading && (
+        {!loading && questions.length && (
           <section>
             <h3 data-testid="question-category">{questions[index].category}</h3>
             <p data-testid="question-text">{questions[index].question}</p>
-            <div data-testid="answer-options">
-              <button
-                data-testid="correct-answer"
-                type="button"
-                onClick={ this.handleClick }
-                disabled={ isDisabled }
-              >
-                {questions[index].correct_answer}
-              </button>
-
-              {questions[index].incorrect_answers.map((elem, i) => (
-                <button
-                  data-testid={ `wrong-answer-${index}` }
-                  type="button"
-                  key={ i }
-                  onClick={ this.handleClick }
-                  disabled={ isDisabled }
-                >
-                  {elem}
-                </button>
+            <div data-testid="answer-options" className="answer-options">
+              {questionsAll.map((elem, i) => (
+                (elem === questions[index].correct_answer)
+                  ? (
+                    <button
+                      data-testid="correct-answer"
+                      type="button"
+                      onClick={ this.handleClick }
+                      disabled={ isDisabled }
+                    >
+                      {elem}
+                    </button>)
+                  : (
+                    <button
+                      data-testid={ `wrong-answer-${index}` }
+                      type="button"
+                      key={ i }
+                      onClick={ this.handleClick }
+                      disabled={ isDisabled }
+                    >
+                      {elem}
+                    </button>
+                  )
               ))}
             </div>
             <div>

@@ -61,3 +61,27 @@ body {
     transform: translate3d(4px, 0, 0);
   }
 }
+
+/* .answer-options {
+  display: flex;
+}
+
+.order-1 {
+  order: 1;
+}
+
+.order-2 {
+  order: 2;
+}
+
+.order-3 {
+  order: 3;
+}
+
+.order-4 {
+  order: 4;
+}
+
+.order-5 {
+  order: 5;
+} */
