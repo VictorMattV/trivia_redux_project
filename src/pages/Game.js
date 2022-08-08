@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 
 class Game extends React.Component {
   state = {
     index: 0,
+    timer: 30,
+    isDisabled: false,
     questionsAll: [],
   }
 
@@ -16,6 +18,7 @@ class Game extends React.Component {
     if (!loading) {
       this.randomAnswer(index);
     }
+    this.questionsTimer();
   }
 
   randomAnswer = (index) => {
@@ -32,6 +35,20 @@ class Game extends React.Component {
     console.log(questionsAll);
   }
 
+  questionsTimer = () => {
+    const milliseconds = 1000;
+    setInterval(() => {
+      const { timer } = this.state;
+      if (timer) {
+        this.setState({
+          timer: timer - 1,
+        });
+      } else {
+        this.setState({ isDisabled: true });
+      }
+    }, milliseconds);
+  }
+
   handleClick = () => {
     const { index } = this.state;
     const { questions } = this.props;
@@ -44,12 +61,11 @@ class Game extends React.Component {
   }
 
   render() {
-    const { index, questionsAll } = this.state;
+    const { index, timer, isDisabled, questionsAll } = this.state;
     const { loading, questions, logout } = this.props;
     if (logout) {
       return <Redirect to="/" />;
     }
-    console.log('oi');
     return (
       <div>
         <Header />
@@ -65,6 +81,7 @@ class Game extends React.Component {
                       data-testid="correct-answer"
                       type="button"
                       onClick={ this.handleClick }
+                      disabled={ isDisabled }
                     >
                       {elem}
                     </button>)
@@ -74,12 +91,15 @@ class Game extends React.Component {
                       type="button"
                       key={ i }
                       onClick={ this.handleClick }
+                      disabled={ isDisabled }
                     >
                       {elem}
                     </button>
                   )
               ))}
-
+            </div>
+            <div>
+              {timer}
             </div>
           </section>
         )}
