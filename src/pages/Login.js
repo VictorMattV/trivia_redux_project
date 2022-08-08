@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginAction } from '../redux/actions';
+import { loginAction, requestQuestions } from '../redux/actions';
 import fetchToken from '../services/fetchToken';
 import logo from '../trivia.png';
 
@@ -14,6 +14,10 @@ class Login extends React.Component {
       username: '',
       isDisabled: true,
     };
+  }
+
+  componentDidMount() {
+    fetchToken();
   }
 
   handleChange = ({ target }) => {
@@ -40,11 +44,11 @@ class Login extends React.Component {
     dispatch(loginAction(userInfo));
   }
 
-  handleClick = () => {
-    const { history } = this.props;
-    fetchToken();
+  handleClick = async () => {
+    const { dispatch, history } = this.props;
     this.saveUserLoginInfo();
     history.push('/game');
+    dispatch(requestQuestions());
   }
 
   render() {

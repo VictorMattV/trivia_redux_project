@@ -1,35 +1,35 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
-import fetchQuestions from '../services/fetchQuestions';
+// import fetchQuestions from '../services/fetchQuestions';
 
 class Game extends React.Component {
   state = {
-    questions: [],
     index: 0,
-    loading: true,
-    logout: false,
   }
 
   componentDidMount() {
-    this.fetchCalling();
+    // this.fetchCalling();
   }
 
-  fetchCalling = async () => {
-    const resultsFetch = await fetchQuestions();
-    const questions = resultsFetch.results;
-    if (!questions.length) {
-      localStorage.removeItem('token');
-      this.setState({ logout: true });
-    }
-    this.setState({
-      questions }, () => {
-      this.setState({ loading: false });
-    });
-  }
+  // fetchCalling = async () => {
+  //   const resultsFetch = await fetchQuestions();
+  //   const questions = resultsFetch.results;
+  //   if (!questions.length) {
+  //     localStorage.removeItem('token');
+  //     this.setState({ logout: true });
+  //   }
+  //   this.setState({
+  //     questions }, () => {
+  //     this.setState({ loading: false });
+  //   });
+  // }
 
   handleClick = () => {
-    const { index, questions } = this.state;
+    const { index } = this.state;
+    const { questions } = this.props;
     const arrLength = questions.length - 1;
     if (index < arrLength) {
       this.setState({ index: index + 1 });
@@ -39,7 +39,8 @@ class Game extends React.Component {
   }
 
   render() {
-    const { questions, index, loading, logout } = this.state;
+    const { index } = this.state;
+    const { loading, questions, logout } = this.props;
     if (logout) {
       return <Redirect to="/" />;
     }
@@ -78,4 +79,23 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+Game.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  questions: PropTypes.arrayOf(PropTypes.shape({
+    category: PropTypes.string,
+    question: PropTypes.string,
+    correct_answer: PropTypes.string,
+    incorrect_answers: PropTypes.arrayOf(
+      PropTypes.string,
+    ),
+  })).isRequired,
+  logout: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (store) => ({
+  loading: store.game.loading,
+  questions: store.game.questions,
+  logout: store.game.logout,
+});
+
+export default connect(mapStateToProps)(Game);
