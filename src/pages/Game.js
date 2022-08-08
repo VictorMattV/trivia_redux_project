@@ -3,29 +3,11 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-// import fetchQuestions from '../services/fetchQuestions';
 
 class Game extends React.Component {
   state = {
     index: 0,
   }
-
-  componentDidMount() {
-    // this.fetchCalling();
-  }
-
-  // fetchCalling = async () => {
-  //   const resultsFetch = await fetchQuestions();
-  //   const questions = resultsFetch.results;
-  //   if (!questions.length) {
-  //     localStorage.removeItem('token');
-  //     this.setState({ logout: true });
-  //   }
-  //   this.setState({
-  //     questions }, () => {
-  //     this.setState({ loading: false });
-  //   });
-  // }
 
   handleClick = () => {
     const { index } = this.state;
