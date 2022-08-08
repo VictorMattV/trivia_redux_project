@@ -1,6 +1,6 @@
 // import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import Header from '../components/Header';
 
 class FeedBack extends React.Component {
@@ -28,4 +28,4 @@ const mapStateToProps = (state) => ({
 
 */
 
-export default connect(mapStateToProps, null)(FeedBack);
+export default FeedBack;
