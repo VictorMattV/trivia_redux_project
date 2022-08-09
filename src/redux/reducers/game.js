@@ -1,7 +1,7 @@
 import { REQUEST_QUESTIONS,
   RECEIVE_QUESTIONS,
   RECEIVE_QUESTIONS_ERROR,
-  UPDATE_SCORE } from '../actions';
+} from '../actions';
 
 const INITIAL_STATE = {
   questions: [],
@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 };
 
 const game = (state = INITIAL_STATE, action) => {
-  const { questions, type, payload } = action;
+  const { questions, type } = action;
   switch (type) {
   case REQUEST_QUESTIONS:
     return {
@@ -29,12 +29,6 @@ const game = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       logout: true,
-    };
-
-  case UPDATE_SCORE:
-    return {
-      ...state,
-      score: payload,
     };
 
   default:

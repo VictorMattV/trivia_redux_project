@@ -91,6 +91,7 @@ class Game extends React.Component {
     console.log('difficulty', difficulty);
     console.log('newscore', newScore);
     dispatch(scoreAction(newScore));
+    this.setState({ isDisabled: false, timer: 0 });
   }
 
   handleWrongAnswer = () => {
@@ -154,23 +155,25 @@ class Game extends React.Component {
 }
 
 Game.propTypes = {
+  difficulty: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  logout: PropTypes.bool.isRequired,
   questions: PropTypes.arrayOf(PropTypes.shape({
+    difficulty: PropTypes.string.isRequired,
     category: PropTypes.string,
     question: PropTypes.string,
     correct_answer: PropTypes.string,
-    incorrect_answers: PropTypes.arrayOf(
-      PropTypes.string,
-    ),
+    incorrect_answers: PropTypes.arrayOf(PropTypes.string),
   })).isRequired,
-  logout: PropTypes.bool.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   loading: state.game.loading,
   questions: state.game.questions,
   logout: state.game.logout,
-  score: state.game.score,
+  score: state.player.score,
 });
 
 export default connect(mapStateToProps)(Game);
