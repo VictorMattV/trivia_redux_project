@@ -7,12 +7,14 @@ import fetchGravatar from '../services/fetchGravatar';
 class FeedBack extends React.Component {
   componentDidMount() {
     const { username, email, score } = this.props;
-    const userRanking = [{
+    const userRanking = {
       username,
       score,
       img: this.getGravatarImage(email),
-    }];
-    localStorage.setItem('userRanking', JSON.stringify(userRanking));
+    };
+    const userRankingLocal = JSON.parse(localStorage.getItem('userRanking')) || [];
+    userRankingLocal.push(userRanking);
+    localStorage.setItem('userRanking', JSON.stringify(userRankingLocal));
   }
 
   getGravatarImage = (email) => {

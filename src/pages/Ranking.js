@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
 import fetchGravatar from '../services/fetchGravatar';
 
 class Ranking extends React.Component {
@@ -10,7 +9,7 @@ class Ranking extends React.Component {
   }
 
   componentDidMount() {
-    this.pullLocalStorage();
+    this.userRankingSort();
   }
 
   getGravatarImage = (email) => {
@@ -18,12 +17,10 @@ class Ranking extends React.Component {
     return image;
   }
 
-  pullLocalStorage = () => {
-    // const userRanking = JSON.stringify(localStorage.getItem('userRanking'));
-    const userRanking = JSON.parse(localStorage.getItem('userRanking')) || [];
+  userRankingSort = () => {
+    const userRanking = JSON.parse(localStorage.getItem('userRanking'));
+    userRanking.sort((a, b) => b.score - a.score);
     this.setState({ userRanking });
-    // console.log(userRanking);
-    // return userRanking;
   }
 
   render() {
@@ -31,7 +28,6 @@ class Ranking extends React.Component {
     const { userRanking } = this.state;
     return (
       <>
-        <Header />
         <h1 data-testid="ranking-title">Ranking</h1>
         <button
           type="button"
@@ -53,13 +49,6 @@ class Ranking extends React.Component {
             </div>
           )))
           : <p>não há ranking</p>}
-        {/* <img
-          src={ this.getGravatarImage(email) }
-          alt="header-profile"
-          data-testid="header-profile-picture"
-        /> */}
-        {/* <h3 data-testid="player-name-{index}">username</h3>
-        <h3 data-testid="player-score-{index}">score</h3> */}
       </>
 
     );

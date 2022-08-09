@@ -17,14 +17,11 @@ class Game extends React.Component {
   }
 
   async componentDidMount() {
-    const { loading, dispatch } = this.props;
+    const { dispatch } = this.props;
     const { index } = this.state;
-    console.log('dispatch começando', loading);
     await dispatch(requestQuestions());
     const { questions } = this.props;
-    console.log('questions1', questions);
     if (questions.length) {
-      console.log('entrou no randomAnswer', loading);
       this.randomAnswer(index);
     }
     this.questionsTimer();
@@ -32,7 +29,6 @@ class Game extends React.Component {
 
   randomAnswer = () => {
     const { questions } = this.props;
-    console.log('questions', questions);
     const { index } = this.state;
     const questionsInc = questions[index].incorrect_answers;
     const questionsAll = questionsInc.concat(questions[index].correct_answer);

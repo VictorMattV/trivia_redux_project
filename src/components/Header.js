@@ -4,14 +4,6 @@ import { connect } from 'react-redux';
 import fetchGravatar from '../services/fetchGravatar';
 
 class Header extends React.Component {
-  // componentDidMount() {
-  //   const { username, email } = this.props;
-  //   localStorage.setItem(
-  //     'obj', `{username: ${username},
-  //     img: ${this.getGravatarImage(email)}}`,
-  //   );
-  // }
-
     getGravatarImage = (email) => {
       const image = fetchGravatar(email);
       return image;
