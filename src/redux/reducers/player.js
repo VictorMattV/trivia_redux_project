@@ -24,7 +24,6 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       assertions: state.assertions + 1,
     };
-
   default:
     return state;
   }

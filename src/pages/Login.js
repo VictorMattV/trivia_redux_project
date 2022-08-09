@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginAction, requestQuestions } from '../redux/actions';
+import { loginAction } from '../redux/actions';
 import fetchToken from '../services/fetchToken';
 import logo from '../trivia.png';
 
@@ -45,9 +45,8 @@ class Login extends React.Component {
   }
 
   handleClick = async () => {
-    const { dispatch, history } = this.props;
+    const { history } = this.props;
     this.saveUserLoginInfo();
-    await dispatch(requestQuestions());
     history.push('/game');
   }
 
