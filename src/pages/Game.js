@@ -11,6 +11,8 @@ class Game extends React.Component {
     timer: 30,
     isDisabled: false,
     questionsAll: [],
+    // classCorrect: '',
+    // classWrong: '',
   }
 
   componentDidMount() {
@@ -19,7 +21,7 @@ class Game extends React.Component {
     if (!loading) {
       this.randomAnswer(index);
     }
-    this.questionsTimer();
+    // this.questionsTimer();
   }
 
   randomAnswer = () => {
@@ -51,6 +53,15 @@ class Game extends React.Component {
       }
     }, milliseconds);
   }
+
+  verifyCorrect = () => {
+      // const { classCorrect } = this.state;
+      // const { questions } = this.props;
+      this.setState({
+        classCorrect: 'correct-answer',
+        classWrong: 'wrong-answer',
+      });
+    }
 
   handleNextBtn = () => {
     const { index } = this.state;
@@ -92,14 +103,18 @@ class Game extends React.Component {
     console.log('newscore', newScore);
     dispatch(scoreAction(newScore));
     this.setState({ isDisabled: false, timer: 0 });
+    this.verifyCorrect();
   }
 
   handleWrongAnswer = () => {
-    // deixar botões coloridos
+    this.verifyCorrect();
   }
 
   render() {
-    const { index, timer, isDisabled, questionsAll } = this.state;
+    const {
+      index, timer, isDisabled, questionsAll, classCorrect, classWrong,
+    } = this.state;
+
     const { loading, questions, logout } = this.props;
     if (logout) {
       return <Redirect to="/" />;
@@ -118,6 +133,7 @@ class Game extends React.Component {
                   ? (
                     <button
                       data-testid="correct-answer"
+                      className={ classCorrect }
                       type="button"
                       onClick={ this.handleCorrectAnswer }
                       disabled={ isDisabled }
@@ -127,6 +143,7 @@ class Game extends React.Component {
                   : (
                     <button
                       data-testid={ `wrong-answer-${i}` }
+                      className={ classWrong }
                       type="button"
                       key={ i }
                       onClick={ this.handleWrongAnswer }
