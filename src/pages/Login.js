@@ -44,10 +44,10 @@ class Login extends React.Component {
     dispatch(loginAction(userInfo));
   }
 
-  handleClick = async () => {
+  handleClick = () => {
     const { dispatch, history } = this.props;
     this.saveUserLoginInfo();
-    await dispatch(requestQuestions());
+    dispatch(requestQuestions());
     history.push('/game');
   }
 
