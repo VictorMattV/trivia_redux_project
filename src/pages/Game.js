@@ -21,7 +21,7 @@ class Game extends React.Component {
     if (!loading) {
       this.randomAnswer(index);
     }
-    // this.questionsTimer();
+    this.questionsTimer();
   }
 
   randomAnswer = () => {
@@ -55,13 +55,11 @@ class Game extends React.Component {
   }
 
   verifyCorrect = () => {
-      // const { classCorrect } = this.state;
-      // const { questions } = this.props;
-      this.setState({
-        classCorrect: 'correct-answer',
-        classWrong: 'wrong-answer',
-      });
-    }
+    this.setState({
+      classCorrect: 'correct-answer',
+      classWrong: 'wrong-answer',
+    });
+  }
 
   handleNextBtn = () => {
     const { index } = this.state;
