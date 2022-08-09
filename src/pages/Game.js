@@ -11,8 +11,9 @@ class Game extends React.Component {
     timer: 30,
     isDisabled: false,
     questionsAll: [],
-    // classCorrect: '',
-    // classWrong: '',
+    classCorrect: '',
+    classWrong: '',
+    showBtn: false,
   }
 
   componentDidMount() {
@@ -54,25 +55,34 @@ class Game extends React.Component {
     }, milliseconds);
   }
 
-  verifyCorrect = () => {
+  showStyle = () => {
     this.setState({
       classCorrect: 'correct-answer',
       classWrong: 'wrong-answer',
+      showBtn: true,
+    });
+  }
+
+  hideStyle = () => {
+    this.setState({
+      classCorrect: '',
+      classWrong: '',
+      showBtn: false,
     });
   }
 
   handleNextBtn = () => {
     const { index } = this.state;
-    const { questions } = this.props;
+    const { questions, history } = this.props;
     const arrLength = questions.length - 1;
     if (index < arrLength) {
       this.setState((prev) => ({ index: prev.index + 1 }), () => {
         this.randomAnswer();
       });
     } else {
-      this.setState({ index });
+      history.push('/feedback');
     }
-    this.setState({ isDisabled: false, timer: 30 });
+    this.setState({ isDisabled: false, timer: 30 }, () => this.hideStyle());
   }
 
   handleCorrectAnswer = () => {
@@ -101,16 +111,16 @@ class Game extends React.Component {
     console.log('newscore', newScore);
     dispatch(scoreAction(newScore));
     this.setState({ isDisabled: false, timer: 0 });
-    this.verifyCorrect();
+    this.showStyle();
   }
 
   handleWrongAnswer = () => {
-    this.verifyCorrect();
+    this.showStyle();
   }
 
   render() {
     const {
-      index, timer, isDisabled, questionsAll, classCorrect, classWrong,
+      index, timer, isDisabled, questionsAll, classCorrect, classWrong, showBtn,
     } = this.state;
 
     const { loading, questions, logout } = this.props;
@@ -152,13 +162,15 @@ class Game extends React.Component {
                   )
               ))}
             </div>
-            <button
-              type="button"
-              data-testid="btn-next"
-              onClick={ this.handleNextBtn }
-            >
-              Next
-            </button>
+            {(showBtn) && (
+              <button
+                type="button"
+                data-testid="btn-next"
+                onClick={ this.handleNextBtn }
+              >
+                Next
+              </button>
+            )}
             <div>
               {timer}
             </div>
@@ -170,8 +182,10 @@ class Game extends React.Component {
 }
 
 Game.propTypes = {
-  difficulty: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   loading: PropTypes.bool.isRequired,
   logout: PropTypes.bool.isRequired,
   questions: PropTypes.arrayOf(PropTypes.shape({
