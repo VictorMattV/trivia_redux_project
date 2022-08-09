@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import FeedBack from './pages/FeedBack';
+import FeedBack from './pages/Feedback';
 import Game from './pages/Game';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
