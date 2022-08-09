@@ -16,10 +16,6 @@ class Login extends React.Component {
     };
   }
 
-  componentDidMount() {
-    fetchToken();
-  }
-
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({
@@ -47,6 +43,7 @@ class Login extends React.Component {
   handleClick = async () => {
     const { history, dispatch } = this.props;
     this.saveUserLoginInfo();
+    await fetchToken();
     dispatch(requestQuestionsLoading());
     history.push('/game');
   }
