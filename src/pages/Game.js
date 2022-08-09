@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
-import { scoreAction } from '../redux/actions';
+import { scoreAction, sumAssertion } from '../redux/actions';
 
 class Game extends React.Component {
   state = {
@@ -96,10 +96,8 @@ class Game extends React.Component {
       break;
     }
     const newScore = score + (timer * questionDifficulty);
-    console.log('timer', timer);
-    console.log('difficulty', difficulty);
-    console.log('newscore', newScore);
     dispatch(scoreAction(newScore));
+    dispatch(sumAssertion());
     this.setState({ isDisabled: false, timer: 0 });
     this.verifyCorrect();
   }

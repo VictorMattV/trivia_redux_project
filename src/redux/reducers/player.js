@@ -1,8 +1,8 @@
-import { UPDATE_SCORE, USER_LOGIN } from '../actions';
+import { SUM_ASSERTION, UPDATE_SCORE, USER_LOGIN } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
 };
@@ -17,6 +17,12 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: payload,
+    };
+
+  case SUM_ASSERTION:
+    return {
+      ...state,
+      assertions: state.assertions + 1,
     };
 
   default:
