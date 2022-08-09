@@ -1,6 +1,7 @@
-import { REQUEST_QUESTIONS,
+import {
   RECEIVE_QUESTIONS,
   RECEIVE_QUESTIONS_ERROR,
+  REQUEST_QUESTIONS,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -15,7 +16,6 @@ const game = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       loading: true,
-      score: 0,
     };
 
   case RECEIVE_QUESTIONS:

@@ -5,6 +5,7 @@ export const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS';
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
 export const RECEIVE_QUESTIONS_ERROR = 'RECEIVE_QUESTIONS_ERROR';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
+export const SUM_ASSERTION = 'SUM_ASSERTION';
 
 export const loginAction = (payload) => ({ type: USER_LOGIN, payload });
 
@@ -19,6 +20,10 @@ export const receiveQuestions = (questions) => ({
 
 export const receiveQuestionsError = () => ({
   type: RECEIVE_QUESTIONS_ERROR,
+});
+
+export const sumAssertion = () => ({
+  type: SUM_ASSERTION,
 });
 
 export const requestQuestions = () => async (dispatch) => {
