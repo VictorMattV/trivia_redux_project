@@ -4,6 +4,7 @@ export const USER_LOGIN = 'USER_LOGIN';
 export const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS';
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
 export const RECEIVE_QUESTIONS_ERROR = 'RECEIVE_QUESTIONS_ERROR';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
 
 export const loginAction = (payload) => ({ type: USER_LOGIN, payload });
 
@@ -29,3 +30,5 @@ export const requestQuestions = () => async (dispatch) => {
     dispatch(receiveQuestionsError());
   }
 };
+
+export const scoreAction = (payload) => ({ type: UPDATE_SCORE, payload });

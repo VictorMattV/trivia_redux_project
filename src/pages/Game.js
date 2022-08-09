@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
+import { scoreAction } from '../redux/actions';
 
 class Game extends React.Component {
   state = {
@@ -20,21 +21,23 @@ class Game extends React.Component {
     if (!loading) {
       this.randomAnswer(index);
     }
-    // this.questionsTimer();
+    this.questionsTimer();
   }
 
-  randomAnswer = (index) => {
+  randomAnswer = () => {
     const { questions } = this.props;
-    console.log(questions);
+    const { index } = this.state;
+    console.log('index', index);
+    console.log('questions', questions);
     const questionsInc = questions[index].incorrect_answers;
     const questionsAll = questionsInc.concat(questions[index].correct_answer);
-    console.log(questionsAll);
     for (let i = 0; i < questionsAll.length; i += 1) {
       const j = Math.floor(Math.random() * (i + 1));
       [questionsAll[i], questionsAll[j]] = [questionsAll[j], questionsAll[i]];
     }
     this.setState({ questionsAll });
-    console.log(questionsAll);
+    // console.log('resposta certa', questions[index].correct_answer);
+    console.log('questionsAll', questionsAll);
   }
 
   questionsTimer = () => {
@@ -51,40 +54,58 @@ class Game extends React.Component {
     }, milliseconds);
   }
 
-  handleClick = () => {
-    // const { index } = this.state;
-    // const { questions } = this.props;
-    // const arrLength = questions.length - 1;
-    // if (index < arrLength) {
-    //   this.setState({ index: index + 1 }, () => {
-    //     this.randomAnswer(index);
-    this.verifyCorrect();
-    //   });
-    // } else {
-    //   this.setState({ index });
-    // }
-  }
-
   verifyCorrect = () => {
-    // const { classCorrect } = this.state;
-    // const { questions } = this.props;
     this.setState({
       classCorrect: 'correct-answer',
       classWrong: 'wrong-answer',
     });
   }
 
-  nextClick = () => {
+  handleNextBtn = () => {
     const { index } = this.state;
     const { questions } = this.props;
     const arrLength = questions.length - 1;
     if (index < arrLength) {
-      this.setState({ index: index + 1 }, () => {
-        this.randomAnswer(index);
+      this.setState((prev) => ({ index: prev.index + 1 }), () => {
+        this.randomAnswer();
       });
     } else {
       this.setState({ index });
     }
+    this.setState({ isDisabled: false, timer: 30 });
+  }
+
+  handleCorrectAnswer = () => {
+    const { score, questions, dispatch } = this.props;
+    const { timer, index } = this.state;
+    const { difficulty } = questions[index];
+    let questionDifficulty = 0;
+    const hardQuestionPoints = 3;
+    switch (difficulty) {
+    case 'easy':
+      questionDifficulty = 1;
+      break;
+    case 'medium':
+      questionDifficulty = 2;
+      break;
+    case 'hard':
+      questionDifficulty = hardQuestionPoints;
+      break;
+    default:
+      questionDifficulty = 0;
+      break;
+    }
+    const newScore = score + (timer * questionDifficulty);
+    console.log('timer', timer);
+    console.log('difficulty', difficulty);
+    console.log('newscore', newScore);
+    dispatch(scoreAction(newScore));
+    this.setState({ isDisabled: false, timer: 0 });
+    this.verifyCorrect();
+  }
+
+  handleWrongAnswer = () => {
+    this.verifyCorrect();
   }
 
   render() {
@@ -103,6 +124,7 @@ class Game extends React.Component {
           <section>
             <h3 data-testid="question-category">{questions[index].category}</h3>
             <p data-testid="question-text">{questions[index].question}</p>
+            <p>{ questions[index].correct_answer }</p>
             <div data-testid="answer-options" className="answer-options">
               {questionsAll.map((elem, i) => (
                 (elem === questions[index].correct_answer)
@@ -111,18 +133,18 @@ class Game extends React.Component {
                       data-testid="correct-answer"
                       className={ classCorrect }
                       type="button"
-                      onClick={ this.handleClick }
+                      onClick={ this.handleCorrectAnswer }
                       disabled={ isDisabled }
                     >
                       {elem}
                     </button>)
                   : (
                     <button
-                      data-testid={ `wrong-answer-${index}` }
+                      data-testid={ `wrong-answer-${i}` }
                       className={ classWrong }
                       type="button"
                       key={ i }
-                      onClick={ this.handleClick }
+                      onClick={ this.handleWrongAnswer }
                       disabled={ isDisabled }
                     >
                       {elem}
@@ -130,6 +152,13 @@ class Game extends React.Component {
                   )
               ))}
             </div>
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ this.handleNextBtn }
+            >
+              Next
+            </button>
             <div>
               {timer}
             </div>
@@ -141,22 +170,25 @@ class Game extends React.Component {
 }
 
 Game.propTypes = {
+  difficulty: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  logout: PropTypes.bool.isRequired,
   questions: PropTypes.arrayOf(PropTypes.shape({
+    difficulty: PropTypes.string.isRequired,
     category: PropTypes.string,
     question: PropTypes.string,
     correct_answer: PropTypes.string,
-    incorrect_answers: PropTypes.arrayOf(
-      PropTypes.string,
-    ),
+    incorrect_answers: PropTypes.arrayOf(PropTypes.string),
   })).isRequired,
-  logout: PropTypes.bool.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (store) => ({
-  loading: store.game.loading,
-  questions: store.game.questions,
-  logout: store.game.logout,
+const mapStateToProps = (state) => ({
+  loading: state.game.loading,
+  questions: state.game.questions,
+  logout: state.game.logout,
+  score: state.player.score,
 });
 
 export default connect(mapStateToProps)(Game);
