@@ -17,17 +17,27 @@ class Game extends React.Component {
   }
 
   async componentDidMount() {
-    const { dispatch, loading } = this.props;
+    const { loading } = this.props;
     const { index } = this.state;
-    await dispatch(requestQuestions());
-    if (!loading) {
+    console.log('dispatch começando', loading);
+    await this.fetchQuestions();
+    const { questions } = this.props;
+    console.log('questions1', questions);
+    if (questions.length) {
+      console.log('entrou no randomAnswer', loading);
       this.randomAnswer(index);
     }
     this.questionsTimer();
   }
 
+  fetchQuestions = async () => {
+    const { dispatch } = this.props;
+    await dispatch(requestQuestions());
+  }
+
   randomAnswer = () => {
     const { questions } = this.props;
+    console.log('questions', questions);
     const { index } = this.state;
     const questionsInc = questions[index].incorrect_answers;
     const questionsAll = questionsInc.concat(questions[index].correct_answer);
