@@ -3,7 +3,7 @@ const mockFetchReturn = {
     {
       category: 'History',
       type: 'multiple',
-      difficulty: 'hard',
+      difficulty: 'easy',
       question: 'With which Greek philosopher would you associate the phrase, &quot;I know that I know nothing&quot;?',
       correct_answer: 'Socrates',
       incorrect_answers: [
@@ -27,7 +27,7 @@ const mockFetchReturn = {
     {
       category: 'Entertainment: Music',
       type: 'multiple',
-      difficulty: 'medium',
+      difficulty: 'hard',
       question: '&quot;Lift Your Spirit&quot; is an album by which artist?',
       correct_answer: 'Aloe Blacc',
       incorrect_answers: [
@@ -51,7 +51,7 @@ const mockFetchReturn = {
     {
       category: 'Science & Nature',
       type: 'multiple',
-      difficulty: 'hard',
+      difficulty: 'default',
       question: 'How many protons are in an oxygen atom?',
       correct_answer: 'Eight',
       incorrect_answers: [
