@@ -19,8 +19,10 @@ class Ranking extends React.Component {
 
   userRankingSort = () => {
     const userRanking = JSON.parse(localStorage.getItem('userRanking'));
-    userRanking.sort((a, b) => b.score - a.score);
-    this.setState({ userRanking });
+    if (userRanking) {
+      userRanking.sort((a, b) => b.score - a.score);
+      this.setState({ userRanking });
+    }
   }
 
   render() {
@@ -48,7 +50,7 @@ class Ranking extends React.Component {
               <h3 data-testid={ `player-score-${index}` }>{user.score}</h3>
             </div>
           )))
-          : <p>não há ranking</p>}
+          : <p>não há Ranking</p>}
       </>
 
     );
