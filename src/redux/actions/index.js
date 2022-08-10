@@ -36,8 +36,6 @@ export const requestQuestions = () => async (dispatch) => {
 
   if (json.results.length) {
     dispatch(receiveQuestions(json.results));
-    console.log('dispatch ok');
-    console.log('json results', json.results);
   } else {
     dispatch(receiveQuestionsError());
   }

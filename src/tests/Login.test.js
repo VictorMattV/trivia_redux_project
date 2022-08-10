@@ -1,8 +1,9 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import App from "../App";
 import Login from "../pages/Login";
+import mockFetchReturn from "./helpers/mockFetchReturn";
 import renderWithRouterAndRedux from "./helpers/renderWithRouterAndRedux";
 
 describe('Login page tests', () => {
@@ -21,8 +22,12 @@ describe('Login page tests', () => {
     expect(loginBtn).toBeInTheDocument();
     expect(settingsBtn).toBeInTheDocument();
   })
-  it('validates inputs and tests play button', () => {
+  it('validates inputs and tests play button', async () => {
     const { history } = renderWithRouterAndRedux(<App />);
+
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockFetchReturn),
+    });
 
     const emailInput = screen.getByTestId('input-gravatar-email');
     const nameInput = screen.getByTestId('input-player-name');
@@ -34,7 +39,8 @@ describe('Login page tests', () => {
     expect(loginBtn).not.toBeDisabled();
 
     userEvent.click(loginBtn);
-    // expect(history.location.pathname).toBe('/game');
+    await waitFor(() => expect(fetch).toBeCalled()) 
+    expect(history.location.pathname).toBe('/game');
   })
   it('tests settings button', () => {
     const { history } = renderWithRouterAndRedux(<App />);
