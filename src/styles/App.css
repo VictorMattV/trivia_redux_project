@@ -1,5 +1,17 @@
+:root {
+
+  --grey: #282c34;
+
+  --lightgrey: grey;
+
+  --lightgreen: rgb(126, 139, 116);
+
+  --font1: oswald , sans-serif;
+}
+
 body {
   box-sizing: border-box;
+  font-family: var(--font1);
   margin: 0;
   padding: 5px;
 }
@@ -9,7 +21,7 @@ body {
 }
 
 .App-logo {
-  height: 15vmin;
+  height: 100px;
   pointer-events: none;
 }
 
@@ -21,22 +33,12 @@ body {
   border: 1px solid green;
 }
 
+
 @media ( prefers-reduced-motion : no-preference ) {
 
-  .App-logo {
+  .App-logo, .App-header button:hover {
     animation: shake infinite 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   }
-}
-
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
 }
 
 .App-link {
@@ -69,3 +71,5 @@ body {
 .wrong-answer {
   border: 3px solid red;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap') ;

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { loginAction, requestQuestionsLoading } from '../redux/actions';
 import fetchToken from '../services/fetchToken';
 import logo from '../trivia.png';
+import '../styles/Login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -25,7 +26,7 @@ class Login extends React.Component {
 
   validateInputs = () => {
     const { email, username } = this.state;
-    const minLength = 3;
+    const minLength = 2;
     if (email.length > minLength && username.length > minLength) {
       this.setState({
         isDisabled: false,
@@ -56,7 +57,6 @@ class Login extends React.Component {
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
         <label htmlFor="email">
-          Email:
           <input
             type="email"
             data-testid="input-gravatar-email"
@@ -64,10 +64,10 @@ class Login extends React.Component {
             name="email"
             value={ email }
             onChange={ this.handleChange }
+            placeholder="Email"
           />
         </label>
         <label htmlFor="username">
-          Nome:
           <input
             type="text"
             data-testid="input-player-name"
@@ -75,6 +75,7 @@ class Login extends React.Component {
             name="username"
             value={ username }
             onChange={ this.handleChange }
+            placeholder="Nome"
           />
         </label>
         <button

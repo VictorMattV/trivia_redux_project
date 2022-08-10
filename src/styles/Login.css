@@ -1,0 +1,60 @@
+body {
+  background-color: var(--grey);
+}
+
+.App-header {
+  align-items: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  gap: 15px;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.App-header img {
+  margin-bottom: 15px;
+}
+
+.App-header label {
+  display: flex;
+  justify-content: center;
+  width: 250px;
+}
+
+.App-header input {
+  background-color: var(--grey);
+  border: white 1px solid;
+  border-radius: 5px;
+  color: white;
+  font-family: var(--font1);
+  font-size: 1.5rem;
+  padding: 15px;
+  width: 250px;
+}
+
+.App-header button {
+  background-color: var(--lightgreen);
+  border: solid 1px var(--grey);
+  border-radius: 5px;
+  color: white;
+  font-family: var(--font1);
+  font-size: 1.2rem;
+  padding: 10px;
+  width: 282px;
+}
+
+.App-header button:nth-of-type( 2 ) {
+  background-color: var(--lightgrey);
+}
+
+.App-header button:hover {
+  border: white 1px solid;
+  cursor: pointer;
+}
+
+.App-header button:disabled {
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}
