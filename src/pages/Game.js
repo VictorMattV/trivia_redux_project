@@ -167,7 +167,10 @@ class Game extends React.Component {
                 Next
               </button>
             )}
-            <div>
+            <div
+              data-testid="timer"
+              className="timer"
+            >
               {timer}
             </div>
           </section>
