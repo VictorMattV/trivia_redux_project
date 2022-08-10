@@ -11,7 +11,11 @@ const player = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
   switch (type) {
   case USER_LOGIN:
-    return { ...state, name: payload.username, gravatarEmail: payload.email };
+    return {
+      ...state,
+      name: payload.username,
+      gravatarEmail: payload.email,
+      score: 0 };
 
   case UPDATE_SCORE:
     return {
@@ -24,7 +28,6 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       assertions: state.assertions + 1,
     };
-
   default:
     return state;
   }

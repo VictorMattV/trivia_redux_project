@@ -4,25 +4,25 @@ import { connect } from 'react-redux';
 import fetchGravatar from '../services/fetchGravatar';
 
 class Header extends React.Component {
-  getGravatarImage = (email) => {
-    const image = fetchGravatar(email);
-    return image;
-  }
+    getGravatarImage = (email) => {
+      const image = fetchGravatar(email);
+      return image;
+    }
 
-  render() {
-    const { username, email, score } = this.props;
-    return (
-      <header>
-        <img
-          src={ this.getGravatarImage(email) }
-          alt="header-profile"
-          data-testid="header-profile-picture"
-        />
-        <h3 data-testid="header-player-name">{ username }</h3>
-        <h3 data-testid="header-score">{ score }</h3>
-      </header>
-    );
-  }
+    render() {
+      const { username, email, score } = this.props;
+      return (
+        <header>
+          <img
+            src={ this.getGravatarImage(email) }
+            alt="header-profile"
+            data-testid="header-profile-picture"
+          />
+          <h3 data-testid="header-player-name">{ username }</h3>
+          <h3 data-testid="header-score">{ score }</h3>
+        </header>
+      );
+    }
 }
 
 Header.propTypes = {

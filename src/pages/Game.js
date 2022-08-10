@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
-import { scoreAction, sumAssertion } from '../redux/actions';
+import { requestQuestions, scoreAction, sumAssertion } from '../redux/actions';
 
 class Game extends React.Component {
   state = {
@@ -16,10 +16,12 @@ class Game extends React.Component {
     showBtn: false,
   }
 
-  componentDidMount() {
-    const { loading } = this.props;
+  async componentDidMount() {
+    const { dispatch } = this.props;
     const { index } = this.state;
-    if (!loading) {
+    await dispatch(requestQuestions());
+    const { questions } = this.props;
+    if (questions.length) {
       this.randomAnswer(index);
     }
     this.questionsTimer();
@@ -28,8 +30,6 @@ class Game extends React.Component {
   randomAnswer = () => {
     const { questions } = this.props;
     const { index } = this.state;
-    console.log('index', index);
-    console.log('questions', questions);
     const questionsInc = questions[index].incorrect_answers;
     const questionsAll = questionsInc.concat(questions[index].correct_answer);
     for (let i = 0; i < questionsAll.length; i += 1) {
@@ -37,8 +37,6 @@ class Game extends React.Component {
       [questionsAll[i], questionsAll[j]] = [questionsAll[j], questionsAll[i]];
     }
     this.setState({ questionsAll });
-    // console.log('resposta certa', questions[index].correct_answer);
-    console.log('questionsAll', questionsAll);
   }
 
   questionsTimer = () => {

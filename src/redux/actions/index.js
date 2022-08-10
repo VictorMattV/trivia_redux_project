@@ -1,4 +1,4 @@
-import fetchQuestions from '../../services/fetchQuestions';
+// import fetchQuestions from '../../services/fetchQuestions';
 
 export const USER_LOGIN = 'USER_LOGIN';
 export const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS';
@@ -28,9 +28,16 @@ export const sumAssertion = () => ({
 
 export const requestQuestions = () => async (dispatch) => {
   dispatch(requestQuestionsLoading());
-  const response = await fetchQuestions();
-  if (response.length) {
-    dispatch(receiveQuestions(response));
+  // const response = await fetchQuestions();
+  const token = localStorage.getItem('token');
+  const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
+  const response = await fetch(url);
+  const json = await response.json();
+
+  if (json.results.length) {
+    dispatch(receiveQuestions(json.results));
+    console.log('dispatch ok');
+    console.log('json results', json.results);
   } else {
     dispatch(receiveQuestionsError());
   }
