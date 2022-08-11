@@ -1,0 +1,38 @@
+.feedbackContainer {
+  align-items: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  padding: var(--gap);
+}
+
+.feedbackContainer h3, p {
+  margin-bottom: var(--gap);
+}
+
+.btnsRanking {
+  display: flex;
+  gap: var(--gap);
+}
+
+.btnsRanking button {
+  background-color: var(--lightgreen);
+  border: solid 3px var(--grey);
+  border-radius: var(--border-radius);
+  color: white;
+  cursor: pointer;
+  font-family: var(--font1);
+  font-size: 1.2rem;
+  min-width: 282px;
+  padding: 10px;
+}
+
+.btnsRanking button:nth-of-type( 2 ) {
+  background-color: var(--lightgrey);
+}
+
+.btnsRanking button:hover {
+  background-color: var(--lightergrey);
+  cursor: pointer;
+}

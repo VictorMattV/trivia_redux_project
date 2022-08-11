@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import fetchGravatar from '../services/fetchGravatar';
+import '../styles/Feedback.css';
 
 class FeedBack extends React.Component {
   componentDidMount() {
@@ -30,29 +31,30 @@ class FeedBack extends React.Component {
         <div>
           <Header />
         </div>
-        <div>
-          <p data-testid="feedback-text">
+        <div className="feedbackContainer">
+          <h3 data-testid="feedback-text">
             {correctAnswersCheck < three ? 'Could be better...' : 'Well Done!' }
-          </p>
+          </h3>
+          <h4>Total Score:</h4>
           <p data-testid="feedback-total-score">{score}</p>
+          <h4>Correct Answers:</h4>
           <p data-testid="feedback-total-question">{correctAnswersCheck}</p>
-          <button
-            type="button"
-            data-testid="btn-play-again"
-            onClick={ () => history.push('/') }
-          >
-            Play Again
-
-          </button>
-          <button
-            type="button"
-            data-testid="btn-ranking"
-            onClick={ () => history.push('/ranking') }
-          >
-            Ranking
-
-          </button>
-
+          <div className="btnsRanking">
+            <button
+              type="button"
+              data-testid="btn-play-again"
+              onClick={ () => history.push('/') }
+            >
+              Play Again
+            </button>
+            <button
+              type="button"
+              data-testid="btn-ranking"
+              onClick={ () => history.push('/ranking') }
+            >
+              Ranking
+            </button>
+          </div>
         </div>
       </div>
     );
