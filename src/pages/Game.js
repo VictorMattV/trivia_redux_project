@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import { requestQuestions, scoreAction, sumAssertion } from '../redux/actions';
+import '../styles/Game.css';
 
 class Game extends React.Component {
   state = {
@@ -112,6 +113,7 @@ class Game extends React.Component {
 
   handleWrongAnswer = () => {
     this.showStyle();
+    this.setState({ timer: 0 });
   }
 
   render() {
@@ -127,10 +129,15 @@ class Game extends React.Component {
       <div>
         <Header />
         {!loading && questions.length && (
-          <section>
-            <h3 data-testid="question-category">{questions[index].category}</h3>
+          <section className="gameContainer">
+            <h3
+              data-testid="question-category"
+              className="category"
+            >
+              {questions[index].category}
+            </h3>
             <p data-testid="question-text">{questions[index].question}</p>
-            <p>{ questions[index].correct_answer }</p>
+            {/* <p>{ questions[index].correct_answer }</p> */}
             <div data-testid="answer-options" className="answer-options">
               {questionsAll.map((elem, i) => (
                 (elem === questions[index].correct_answer)
@@ -159,21 +166,22 @@ class Game extends React.Component {
                   )
               ))}
             </div>
-            {(showBtn) && (
-              <button
-                type="button"
-                data-testid="btn-next"
-                onClick={ this.handleNextBtn }
-              >
-                Next
-              </button>
-            )}
             <div
               data-testid="timer"
               className="timer"
             >
               {timer}
             </div>
+            {(showBtn) && (
+              <button
+                type="button"
+                data-testid="btn-next"
+                onClick={ this.handleNextBtn }
+                className="nextBtn"
+              >
+                Next
+              </button>
+            )}
           </section>
         )}
       </div>

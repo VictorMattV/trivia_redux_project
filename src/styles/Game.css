@@ -1,0 +1,61 @@
+.gameContainer {
+  align-items: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  gap: var(--gap);
+  margin: 0;
+}
+
+.category {
+  color: var(--lightgrey);
+}
+
+.answer-options {
+  display: flex;
+  gap: var(--gap);
+}
+
+.answer-options button, .nextBtn {
+  background-color: var(--lightgrey);
+  border: solid 3px var(--grey);
+  border-radius: var(--border-radius);
+  color: white;
+  font-family: var(--font1);
+  font-size: 1.2rem;
+  min-width: 282px;
+  padding: 10px;
+}
+
+.answer-options button:hover {
+  background-color: var(--lightergrey);
+  cursor: pointer;
+}
+
+.answer-options button:disabled {
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}
+
+.nextBtn {
+  background-color: var(--lightgreen);
+  margin-top: 16px;
+}
+
+.timer {
+  border: 1px white solid;
+  border-radius: 100%;
+  font-size: 2rem;
+  margin-top: 16px;
+  text-align: center;
+  width: 50px;
+}
+
+.answer-options .correct-answer {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.answer-options .wrong-answer {
+  border: 3px solid red;
+}
