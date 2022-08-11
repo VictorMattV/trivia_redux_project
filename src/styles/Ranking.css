@@ -1,0 +1,87 @@
+.rankingPage {
+  align-items: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  padding: 24px;
+}
+
+.playerRankConteiner {
+  display: flex;
+}
+
+.rankingPage button {
+  background-color: var(--lightgreen);
+  border: solid 3px var(--grey);
+  border-radius: var(--border-radius);
+  color: white;
+  cursor: pointer;
+  font-family: var(--font1);
+  font-size: 1rem;
+  min-width: 100px;
+  padding: 10px;
+}
+
+.rankingContainer {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+.playerRankInfo {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.playerRank {
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: white solid 1px;
+  border-radius: var(--border-radius);
+  box-shadow: 5px 5px 5px black;
+  display: flex;
+
+  /* flex-direction: column; */
+  justify-content: center;
+  min-height: 175px;
+  min-width: 100px;
+  padding: var(--gap);
+}
+
+.playerRank h4 {
+  align-self: flex-start;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.rankingContainer div {
+  flex-grow: 1;
+}
+
+.rankingContainer > div:nth-of-type( 1 ) {
+  background-color: rgba(255, 217, 0, 0.5);
+  flex-basis: 30%;
+  font-size: 1.5rem;
+  margin-left: auto;
+}
+
+.rankingContainer > div:nth-of-type( 2 ) {
+  background-color: rgba(192, 192, 192, 0.5);
+  flex-basis: 30%;
+  font-size: 1.5rem;
+}
+
+.rankingContainer > div:nth-of-type( 3 ) {
+  background-color: rgba(222, 184, 135, 0.5);
+  flex-basis: 30%;
+  font-size: 1.5rem;
+  margin-right: auto;
+}
+
+.rankingContainer img {
+  border-radius: 50%;
+  height: 50px;
+}
