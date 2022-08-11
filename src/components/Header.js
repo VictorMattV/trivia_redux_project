@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import fetchGravatar from '../services/fetchGravatar';
+import '../styles/Header.css';
+import logo from '../trivia.png';
 
 class Header extends React.Component {
     getGravatarImage = (email) => {
@@ -12,14 +14,21 @@ class Header extends React.Component {
     render() {
       const { username, email, score } = this.props;
       return (
-        <header>
-          <img
-            src={ this.getGravatarImage(email) }
-            alt="header-profile"
-            data-testid="header-profile-picture"
-          />
-          <h3 data-testid="header-player-name">{ username }</h3>
-          <h3 data-testid="header-score">{ score }</h3>
+        <header className="Header">
+          <img src={ logo } className="Header-logo" alt="logo" />
+          <section className="Header-player">
+            <img
+              src={ this.getGravatarImage(email) }
+              alt="header-profile"
+              data-testid="header-profile-picture"
+              className="Header-img-profile"
+            />
+            <div className="Header-text">
+              <h3 data-testid="header-player-name">{ `Player: ${username}` }</h3>
+              <h3 data-testid="header-score">{ `Score: ${score}` }</h3>
+            </div>
+          </section>
+
         </header>
       );
     }
