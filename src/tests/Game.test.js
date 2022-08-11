@@ -99,7 +99,7 @@ describe('Game page tests', () => {
       jest.spyOn(global, 'fetch').mockResolvedValue({
         json: jest.fn().mockResolvedValue(mockFetchReturn),
       });
-
+      
       const emailInput = screen.getByTestId('input-gravatar-email');
       const nameInput = screen.getByTestId('input-player-name');
       const loginBtn = screen.getByTestId('btn-play');
@@ -109,9 +109,10 @@ describe('Game page tests', () => {
 
       userEvent.click(loginBtn);
       await waitFor(() => expect(fetch).toBeCalled());
-
-      const correctAnswer = await screen.findByTestId('correct-answer');
-      await waitFor( async () => expect(correctAnswer).toBeDisabled(), {timeOut: 32000,});
+      
+      jest.advanceTimersByTime(31000);
       screen.logTestingPlaygroundURL();
-      }, 33000);
+      const correctAnswer = await screen.findByTestId('correct-answer');
+      expect(correctAnswer).toBeDisabled();
+      });
 });
