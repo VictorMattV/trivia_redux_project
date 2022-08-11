@@ -22,7 +22,7 @@ describe('Game page tests', () => {
       userEvent.type(nameInput, 'Braddock');
 
       userEvent.click(loginBtn);
-      await waitFor(() => expect(fetch).toBeCalled()) 
+      await waitFor(() => expect(fetch).toBeCalled());
       expect(history.location.pathname).toBe('/game');
 
       const playerImg = screen.getByTestId('header-profile-picture');
@@ -88,34 +88,30 @@ describe('Game page tests', () => {
           }
       })
 
-      history.push('/game')
+      history.push('/game');
 
       expect(history.location.pathname).toBe('/');
     })
 
     it('disable options when the timer is zero',  async () => {
-      renderWithRouterAndRedux(<Game />,
-      {
-        player: {
-          score: 1,
-        },
-        game: {
-          logout: false,
-          questions: mockFetchReturn,
-        }
-    })
-    const correctAnswer = await screen.findByTestId('correct-answer');
-    await waitFor(async () => {
-      const timer = await screen.findByText(0)
-      expect(timer).toBeInTheDocument(),{timeOut: 32000}
-    })
-  
-    
-  
-  },34000)
-    
-    screen.logTestingPlaygroundURL()
+      renderWithRouterAndRedux(<App />);
+      jest.useFakeTimers();
+      jest.spyOn(global, 'fetch').mockResolvedValue({
+        json: jest.fn().mockResolvedValue(mockFetchReturn),
+      });
 
-    //expect(correctAnswer).toBeDisabled()
+      const emailInput = screen.getByTestId('input-gravatar-email');
+      const nameInput = screen.getByTestId('input-player-name');
+      const loginBtn = screen.getByTestId('btn-play');
 
-})
+      userEvent.type(emailInput, 'tryber@trybe.com');
+      userEvent.type(nameInput, 'Braddock');
+
+      userEvent.click(loginBtn);
+      await waitFor(() => expect(fetch).toBeCalled());
+
+      const correctAnswer = await screen.findByTestId('correct-answer');
+      await waitFor( async () => expect(correctAnswer).toBeDisabled(), {timeOut: 32000,});
+      screen.logTestingPlaygroundURL();
+      }, 33000);
+});
