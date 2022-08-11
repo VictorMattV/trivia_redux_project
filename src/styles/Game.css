@@ -10,6 +10,7 @@
 
 .category {
   color: var(--lightgrey);
+  margin-top: 50px;
 }
 
 .answer-options {

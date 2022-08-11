@@ -13,14 +13,14 @@
 
 .Header-logo {
   height: 35px;
-  margin: 0 12px;
+  margin: 0 48px;
 }
 
 .Header-player {
   align-items: center;
   display: flex;
   justify-content: space-around;
-  margin: 0 12px;
+  margin: 0 48px;
 }
 
 .Header-img-profile {
