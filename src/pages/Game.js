@@ -141,6 +141,7 @@ class Game extends React.Component {
                       type="button"
                       onClick={ this.handleCorrectAnswer }
                       disabled={ isDisabled }
+                      key={ i }
                     >
                       {elem}
                     </button>)
