@@ -3,7 +3,7 @@
 # Tecnologies
 
 - ReactJs;
-- Redux
+- Redux;
 - HTML;
 - CSS;
 
